@@ -208,7 +208,7 @@ TW_HAS_NO_RECOVERY_PARTITION := true
 
 # TWRP specific build flags
 TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_INCLUDE_NTFS_3G := true
+TW_INCLUDE_NTFS_3G := false
 TW_USE_TOOLBOX := true
 TARGET_USES_MKE2FS := true
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
@@ -216,7 +216,7 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_NO_BATT_PERCENT := false
 
 # TWRP Configuration
-TW_DEFAULT_LANGUAGE := ru
+TW_DEFAULT_LANGUAGE := pl
 TW_EXTRA_LANGUAGES := false
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
@@ -261,3 +261,6 @@ TW_EXCLUDE_APEX := true
 TW_INCLUDE_PYTHON := false
 TW_EXCLUDE_ENCRYPTED_BACKUPS := false
 TW_BACKUP_EXCLUSIONS := /data/fonts/files
+TW_EXCLUDE_SUPERSU := true
+TW_EXCLUDE_MAGISK := true
+
