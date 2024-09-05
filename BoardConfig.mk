@@ -100,8 +100,7 @@ BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
-BOARD_KERNEL_CMDLINE += androidboot.force_normal_boot=1
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_DTB_OFFSET := 0x0bc08000
 BOARD_HASH_TYPE := sha1
@@ -138,11 +137,6 @@ BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 3
 
-#A11 DECRYPTION
-BOARD_AVB_RECOVERY_ADD_HASH_FOOTER_ARGS += \
-    --prop com.android.build.boot.os_version:$(PLATFORM_VERSION) \
-    --prop com.android.build.boot.security_patch:$(PLATFORM_SECURITY_PATCH)
-
 # Hack to get keymaster to recognize the key files
 PLATFORM_SECURITY_PATCH := 2022-12-05
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
@@ -162,33 +156,6 @@ BOARD_ROOT_EXTRA_FOLDERS += metadata
 # Crypto
 TW_INCLUDE_CRYPTO := false
 
-#TW_INCLUDE_CRYPTO := true
-#TW_INCLUDE_CRYPTO_FBE := true
-#TW_INCLUDE_FBE := true
-#TW_INCLUDE_FBE_METADATA_DECRYPT := true
-# fscrypt policy FBEv2
-#TW_USE_FSCRYPT_POLICY := 2
-
-#TW_CRYPTO_FS_TYPE := "ext4"
-#TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/bootdevice/by-name/userdata"
-#TW_CRYPTO_MNT_POINT := "/data"
-##TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered"
-#TW_CRYPTO_FS_OPTIONS := "rw,seclabel,nosuid,nodev,noatime,noauto_da_alloc,inlinecrypt,resgid=1065,errors=panic,data=ordered"
-##TW_CRYPTO_KEY_LOC := "key"
-#TW_CRYPTO_KEY_LOC := /metadata/vold/metadata_encryption/key
-##TW_CRYPTO_KEY_LOC := "footer"
-
-# Additional binaries & libraries needed for recovery
-#TARGET_RECOVERY_DEVICE_MODULES += \
-#    libkeymaster4 \
-#    libkeymaster41 \
-#    libpuresoftkeymasterdevice
-
-#TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-#    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-#    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
-#    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
-
 # Properties
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
 TARGET_RECOVERY_INITRC := $(DEVICE_PATH)/recovery/root/init.recovery.mt6785.rc
@@ -197,7 +164,6 @@ TARGET_RECOVERY_INITRC := $(DEVICE_PATH)/recovery/root/init.recovery.mt6785.rc
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
 
 # Recovery
-#TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 #TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/twrp.fstab
 RECOVERY_SDCARD_ON_DATA := true
@@ -207,7 +173,6 @@ TARGET_NO_RECOVERY := true
 TW_HAS_NO_RECOVERY_PARTITION := true
 
 # TWRP specific build flags
-TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_NTFS_3G := false
 TW_USE_TOOLBOX := true
 TARGET_USES_MKE2FS := true
@@ -229,11 +194,6 @@ TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 TW_MAX_BRIGHTNESS := 255
 TW_DEFAULT_BRIGHTNESS := 150
 
-#TW_Y_OFFSET := 50
-#TW_H_OFFSET := -50
-
-#TW_DEFAULT_DEVICE_NAME := Power Armor 13
-#TW_DEVICE_VERSION := -2-UPA 13_TF3_20230223.V3.01 - Котфуций 🐾
 TW_DEVICE_VERSION := 2-UPA 13_TF3_KSS7T_20230223.V3.01 by lopestom
 
 # Resolution
@@ -252,15 +212,15 @@ TW_MTP_DEVICE := /dev/mtp_usb
 TW_DEFAULT_EXTERNAL_STORAGE := true
 
 # Debug
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true
+TWRP_INCLUDE_LOGCAT := false
 
 # Excludes
 TW_EXCLUDE_TWRPAPP := true
 TW_EXCLUDE_APEX := true
 TW_INCLUDE_PYTHON := false
-TW_EXCLUDE_ENCRYPTED_BACKUPS := false
+TW_EXCLUDE_ENCRYPTED_BACKUPS := true
 TW_BACKUP_EXCLUSIONS := /data/fonts/files
 TW_EXCLUDE_SUPERSU := true
 TW_EXCLUDE_MAGISK := true
+TW_INCLUDE_FB2PNG := false
 
